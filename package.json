@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/chrismohr/lerna-to-typescript-project-references.git"
   },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "lerna-to-typescript-project-references": "dist/cli.js"
   },
