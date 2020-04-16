@@ -32,23 +32,28 @@ packages
       const { references = [] } = config;
       const existingPaths = references.map(r => r.path);
 
-      if (paths.sort().toString() === existingPaths.sort().toString()) {
-        log(`${name} - ${paths.length} dependencies found. All match project references in ${tsConfigFileName}.`);
+      const relativePaths = paths.map(referencePath => {
+        // Convert absolute path to relative path
+        return path.relative(location, referencePath);
+      });
+      if (relativePaths.sort().toString() === existingPaths.sort().toString()) {
+        log(
+          `${name} - ${relativePaths.length} dependencies found. All match project references in ${tsConfigFileName}.`
+        );
       } else if (args['--update']) {
         warn(`*UPDATE* - ${name} - Some dependencies didn't match. Writing ${paths.length} to ${tsConfigFileName}.`);
         const newJsonConfig = JSON.stringify({
           ...config,
-          references: paths.map(referencePath => {
-            // Convert absolute path to relative path
+          references: relativePaths.map(path => {
             return {
-              path: path.relative(location, referencePath)
+              path
             };
           })
         });
         writeFileSync(configFilePath, format(newJsonConfig, { parser: 'json' }));
       } else {
         error(`**FAIL** - ${name} - Some dependencies didn't match.`);
-        error(`**FAIL** - ${name} - From npm packages: ${paths}`);
+        error(`**FAIL** - ${name} - From npm packages: ${relativePaths}`);
         error(`**FAIL** - ${name} - From ${tsConfigFileName}: ${existingPaths}`);
         process.exit(1);
       }
