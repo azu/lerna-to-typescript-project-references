@@ -34,7 +34,11 @@ packages
 
       const relativePaths = paths.map(referencePath => {
         // Convert absolute path to relative path
-        return path.relative(location, referencePath);
+        // Use \ instead of ¥ on Windows
+        return path
+          .relative(location, referencePath)
+          .split(path.sep)
+          .join('/');
       });
       if (relativePaths.sort().toString() === existingPaths.sort().toString()) {
         log(
