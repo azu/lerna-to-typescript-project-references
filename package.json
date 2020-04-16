@@ -1,5 +1,5 @@
 {
-  "name": "lerna-to-typescript-project-references",
+  "name": "@azu/lerna-to-typescript-project-references",
   "version": "1.0.0",
   "description": "Keep package dependencies synchronized between lerna and typescript.",
   "author": "Chris Mohr",
