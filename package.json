@@ -1,6 +1,6 @@
 {
   "name": "lerna-to-typescript-project-references",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Keep package dependencies synchronized between lerna and typescript.",
   "author": "Chris Mohr",
   "license": "MIT",
